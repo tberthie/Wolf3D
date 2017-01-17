@@ -64,7 +64,8 @@ LIB = ft_atoi.c \
 	  ft_wchar.c \
 	  ft_gnl.c \
 	  ft_tablen.c \
-	  ft_errret.c
+	  ft_errret.c \
+	  ft_malloc.c
 
 PRINTF = ft_printf.c \
 		 ft_format.c \

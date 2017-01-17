@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/14 13:19:53 by tberthie          #+#    #+#             */
-/*   Updated: 2017/01/16 12:57:33 by tberthie         ###   ########.fr       */
+/*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
+/*   Updated: 2017/01/17 16:46:26 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "wolf.h"
 
-#include <fcntl.h>
+#include <unistd.h>
+#include <mlx.h>
 
-int			main(int ac, char **av)
+void		run(t_wolf *wolf)
 {
-	t_wolf		*wolf;
-	int			fd;
-
-	if (ac != 2)
-		write(2, "usage: wolf3d [map]\n", 20);
-	else if ((fd = open(av[1], O_RDONLY)) == -1)
+	if ((wolf->mlx = mlx_init()) &&
+	(wolf->win = mlx_new_window(wolf->mlx, WINX, WINY, "Wolf3D")))
 	{
-		write(2, "wolf3d: ", 8);
-		perror(av[1]);
+		render(wolf);
+		mlx_loop(wolf->mlx);
 	}
-	else
-	{
-		wolf = ft_malloc(sizeof(t_wolf));
-		setup(fd, wolf);
-	}
-	return (1);
+	(!wolf->mlx) ? write(2, "wolf3d: mlx failed to init\n", 27) :
+	write(2, "wolf3d: failed to create window\n", 32);
 }

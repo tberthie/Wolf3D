@@ -1,10 +1,14 @@
 SRCS = main.c \
+	   setup.c \
+	   run.c \
+	   render.c \
+	   utl.c
 
 OBJS = $(addprefix srcs/,$(SRCS:.c=.o))
 
 NAME = wolf3d
 CC = gcc
-FLAGS = -Wall -Wextra -Ofast
+FLAGS = -Wall -Wextra
 INCS = includes -I libft/includes
 
 GREEN = \x1b[32m
