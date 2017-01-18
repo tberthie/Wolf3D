@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 12:56:46 by tberthie          #+#    #+#             */
-/*   Updated: 2017/01/17 17:44:16 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/18 15:12:18 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <math.h>
 
-int			insert(t_wolf *wolf, char **line)
+static int		insert(t_wolf *wolf, char **line)
 {
 	int		i;
 	char	*newmap;
@@ -42,17 +42,26 @@ int			insert(t_wolf *wolf, char **line)
 	return (1);
 }
 
-void		setup(int fd, t_wolf *wolf)
+static t_wolf	*init(t_wolf *wolf)
 {
-	char	*line;
-	char	**split;
-
 	wolf->angle = 0;
 	wolf->map = 0;
 	wolf->size = 0;
 	wolf->line = 0;
 	wolf->posx = -1;
 	wolf->dste = 160 / tan(rad(FOV / 2));
+	wolf->bpp = 32;
+	wolf->ls = WINX * 4;
+	wolf->end = 0;
+	return (wolf);
+}
+
+void			setup(int fd, t_wolf *wolf)
+{
+	char	*line;
+	char	**split;
+
+	wolf = init(wolf);
 	line = 0;
 	while (ft_gnl(fd, &line))
 	{

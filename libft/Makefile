@@ -86,20 +86,18 @@ INCS = includes
 all: $(NAME)
 
 $(NAME): $(OBJ) $(PF_OBJ)
-	@ar -rsc $(NAME) $(OBJ) $(PF_OBJ)
+	ar -rsc $(NAME) $(OBJ) $(PF_OBJ)
 
 srcs/%.o: srcs/%.c
-	@$(CC) $(FLAGS) -I $(INCS) -o $@ -c $<
-	@echo "[$@]"
+	$(CC) $(FLAGS) -I $(INCS) -o $@ -c $<
 
 printf/%.o: printf/%.c
-	@$(CC) $(FLAGS) -I $(INCS) -o $@ -c $<
-	@echo "[$@]"
+	$(CC) $(FLAGS) -I $(INCS) -o $@ -c $<
 
 clean:
-	@rm -f $(OBJ) $(PF_OBJ)
+	rm -f $(OBJ) $(PF_OBJ)
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
