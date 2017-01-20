@@ -1,7 +1,6 @@
 SRCS = main.c \
 	   setup.c \
 	   run.c \
-	   bind.c \
 	   render.c \
 	   utl.c
 

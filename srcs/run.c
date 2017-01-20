@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
-/*   Updated: 2017/01/18 15:16:51 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/19 17:15:10 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 #include <unistd.h>
 #include <mlx.h>
+
+static int	key(int code, t_wolf *wolf)
+{
+	code = 0;
+	wolf = 0;
+	return (1);
+}
 
 void		run(t_wolf *wolf)
 {
