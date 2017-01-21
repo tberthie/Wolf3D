@@ -6,22 +6,18 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:06:02 by tberthie          #+#    #+#             */
-/*   Updated: 2017/01/20 15:51:04 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/21 18:12:55 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF_H
 # define WOLF_H
 
-# define WINX	(double)1920
-# define WINY	(double)1080
+# define WINX	(double)1000
+# define WINY	(double)1000
 
 # define CAM	(double)0.5
 # define FOV	(double)60
-
-# define R90	rad(90)
-# define R180	rad(180)
-# define R270	rad(270)
 
 # define FLOOR	'.'
 # define WALL	'0'

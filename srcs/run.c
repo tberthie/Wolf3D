@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
-/*   Updated: 2017/01/20 15:58:48 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/21 16:16:17 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 int			key(int code, t_wolf *wolf)
 {
 	if (code == 0)
-		wolf->angle -= 5;
-	if (code == 2)
 		wolf->angle += 5;
+	if (code == 2)
+		wolf->angle -= 5;
 	render(wolf);
 	return (1);
 }

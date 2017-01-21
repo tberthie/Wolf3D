@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 12:56:46 by tberthie          #+#    #+#             */
-/*   Updated: 2017/01/20 15:27:27 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/01/21 18:12:26 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int		insert(t_wolf *wolf, char **line)
 
 static t_wolf	*init(t_wolf *wolf)
 {
-	wolf->angle = 0;
+	wolf->angle = 60;
 	wolf->map = 0;
 	wolf->size = 0;
 	wolf->line = 0;
