@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 12:56:46 by tberthie          #+#    #+#             */
-/*   Updated: 2017/01/21 18:12:26 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/07 17:39:52 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int		insert(t_wolf *wolf, char **line)
 	int		i;
 	char	*newmap;
 
-	newmap = ft_malloc(sizeof(char) * (wolf->size + ft_tablen(line)));
-	wolf->map ? ft_strncpy(newmap, wolf->map, wolf->size) : 0;
+	newmap = ft_malloc(sizeof(char) * (wolf->size + ft_tablen(line) + 1));
+	wolf->map ? ft_strcpy(newmap, wolf->map) : 0;
 	i = 0;
 	while (line[i])
 	{
@@ -33,9 +33,10 @@ static int		insert(t_wolf *wolf, char **line)
 			wolf->posx = i + 0.5;
 			wolf->posy = wolf->size / wolf->line + 0.5;
 		}
-		newmap[wolf->size++] = *(line[i]) == PLAYER ? 0 : *(line[i]);
+		newmap[wolf->size++] = *(line[i]) == PLAYER ? '0' : *(line[i]);
 		free(line[i++]);
 	}
+	newmap[wolf->size] = 0;
 	free(line);
 	free(wolf->map);
 	wolf->map = newmap;
@@ -44,7 +45,7 @@ static int		insert(t_wolf *wolf, char **line)
 
 static t_wolf	*init(t_wolf *wolf)
 {
-	wolf->angle = 60;
+	wolf->angle = 0;
 	wolf->map = 0;
 	wolf->size = 0;
 	wolf->line = 0;

@@ -8,7 +8,7 @@ OBJS = $(addprefix srcs/,$(SRCS:.c=.o))
 
 NAME = wolf3d
 CC = gcc
-FLAGS = -Wall -Wextra
+FLAGS = -Wall -Wextra -O3
 INCS = includes -I libft/includes
 
 all: $(NAME)
