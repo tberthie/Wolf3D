@@ -9,18 +9,16 @@ OBJS = $(addprefix srcs/,$(SRCS:.c=.o))
 NAME = wolf3d
 CC = gcc
 FLAGS = -Wall -Wextra -O3
-INCS = includes -I libft/includes
+INCS = -I includes -I libft/includes -I SDL
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C libft
-	make -C minilibx
-	gcc $(FLAGS) -o $(NAME) libft/libft.a minilibx/libmlx.a $(OBJS) \
-	-framework OpenGL -framework AppKit
+	gcc $(INCS) $(FLAGS) -o $(NAME) libft/libft.a SDL/libSDL2-2.0.0.dylib $(OBJS)
 
 srcs/%.o: srcs/%.c
-	$(CC) $(FLAGS) -I $(INCS) -I minilibx -o $@ -c $<
+	$(CC) $(FLAGS) $(INCS) -o $@ -c $<
 
 clean:
 	make clean -C libft

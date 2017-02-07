@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:06:02 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/07 15:48:57 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/07 19:23:25 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,22 @@
 # define DOOR	'-'
 # define PLAYER	'x'
 
+# include <SDL.h>
+
 typedef struct	s_wolf
 {
-	void	*mlx;
-	void	*win;
+	SDL_Window		*win;
+	SDL_Renderer	*ren;
+	char			running;
 
-	double	angle;
-	double	posx;
-	double	posy;
-	double	dste;
+	double			angle;
+	double			posx;
+	double			posy;
+	double			dste;
 
-	char	*map;
-	int		line;
-	int		size;
-
-	int		bpp;
-	int		ls;
-	int		end;
+	char			*map;
+	int				line;
+	int				size;
 }				t_wolf;
 
 void			setup(int fd, t_wolf *wolf);

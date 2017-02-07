@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 12:56:46 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/07 17:39:52 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/07 19:24:05 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,13 @@ static int		insert(t_wolf *wolf, char **line)
 
 static t_wolf	*init(t_wolf *wolf)
 {
+	wolf->running = 1;
 	wolf->angle = 0;
 	wolf->map = 0;
 	wolf->size = 0;
 	wolf->line = 0;
 	wolf->posx = -1;
 	wolf->dste = 160 / tan(rad(FOV / 2));
-	wolf->bpp = 32;
-	wolf->ls = WINX * 4;
-	wolf->end = 0;
 	return (wolf);
 }
 
