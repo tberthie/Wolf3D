@@ -9,6 +9,7 @@ LIB = ft_atoi.c \
 	  ft_memccpy.c \
 	  ft_memchr.c \
 	  ft_memcmp.c \
+	  ft_parrpush.c \
 	  ft_memcpy.c \
 	  ft_memdel.c \
 	  ft_memmove.c \

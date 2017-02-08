@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 12:51:48 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/08 01:03:47 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/08 13:21:11 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void					render(t_wolf *wolf)
 
 	SDL_SetRenderDrawColor(wolf->ren, 0, 0, 0, 0);
 	SDL_RenderClear(wolf->ren);
+	wolf->tx = SDL_CreateTextureFromSurface(wolf->ren,
+	SDL_LoadBMP("Textures/Grey10.bmp"));
 	x = 0;
 	while (x < WINX)
 	{

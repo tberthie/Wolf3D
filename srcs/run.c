@@ -6,13 +6,12 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/08 01:25:33 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/08 14:13:32 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-#include <SDL.h>
 #include <unistd.h>
 
 static void		move(int dir, t_wolf *wolf)
@@ -30,13 +29,13 @@ static void		move(int dir, t_wolf *wolf)
 		mx = cos(rad(wolf->angle + (dir == 1 ? 90 : -90))) / 20;
 		my = -sin(rad(wolf->angle + (dir == 1 ? 90 : -90))) / 20;
 	}
-	if (wolf->posx + mx >= 0 && wolf->posx + mx <= wolf->size / wolf->line &&
-	wolf->map[(int)(floor(wolf->posx + mx) + floor(wolf->posy) * wolf->line)]
-	!= WALL)
+	if (wolf->posx + mx > 0 && wolf->posx + mx < wolf->size / wolf->line &&
+	!is_wall(wolf->map[(int)(floor(wolf->posx + mx) + floor(wolf->posy)
+	* wolf->line)]))
 		wolf->posx += mx;
-	if (wolf->posy + my >= 0 && wolf->posy + my <= wolf->size / wolf->line &&
-	wolf->map[(int)(floor(wolf->posx) + floor(wolf->posy + my) * wolf->line)]
-	!= WALL)
+	if (wolf->posy + my > 0 && wolf->posy + my < wolf->size / wolf->line &&
+	!is_wall(wolf->map[(int)(floor(wolf->posx) + floor(wolf->posy + my)
+	* wolf->line)]))
 		wolf->posy += my;
 }
 
@@ -62,8 +61,6 @@ static void		event(SDL_Event event, t_wolf *wolf)
 void			run(t_wolf *wolf)
 {
 	SDL_Event		ev;
-	unsigned int	lt;
-	unsigned int	t;
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
 		write(2, "wolf3d: SDL failed to init\n", 27);
@@ -71,15 +68,15 @@ void			run(t_wolf *wolf)
 	SDL_WINDOW_SHOWN)) && (wolf->ren = SDL_CreateRenderer(wolf->win, -1,
 	SDL_RENDERER_ACCELERATED)))
 	{
+		if (!load_textures(wolf))
+		{
+			SDL_Quit();
+			return ;
+		}
 		SDL_SetRelativeMouseMode(SDL_TRUE);
-		t = SDL_GetTicks();
 		while ((wolf->status))
 		{
-			lt = t;
-			t = SDL_GetTicks();
-			printf("FPS\t%f\n", 1.0 / ((double)(t - lt) / 1000.0));
-			if (SDL_PollEvent(&ev))
-				event(ev, wolf);
+			SDL_PollEvent(&ev) ? event(ev, wolf) : 0;
 			wolf->status == 1 ? render(wolf) : menu(wolf);
 		}
 		SDL_DestroyWindow(wolf->win);
