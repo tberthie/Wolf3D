@@ -1,8 +1,4 @@
-SRCS = main.c \
-	   setup.c \
-	   run.c \
-	   render.c \
-	   utl.c
+SRCS = main.c setup.c run.c render.c utl.c menu.c walls.c
 
 OBJS = $(addprefix srcs/,$(SRCS:.c=.o))
 

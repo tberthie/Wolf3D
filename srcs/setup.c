@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 12:56:46 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/07 19:24:05 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/08 01:10:48 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int		insert(t_wolf *wolf, char **line)
 			wolf->posx = i + 0.5;
 			wolf->posy = wolf->size / wolf->line + 0.5;
 		}
-		newmap[wolf->size++] = *(line[i]) == PLAYER ? '0' : *(line[i]);
+		newmap[wolf->size++] = *(line[i]) == PLAYER ? '.' : *(line[i]);
 		free(line[i++]);
 	}
 	newmap[wolf->size] = 0;
@@ -45,13 +45,14 @@ static int		insert(t_wolf *wolf, char **line)
 
 static t_wolf	*init(t_wolf *wolf)
 {
-	wolf->running = 1;
+	wolf->status = 1;
 	wolf->angle = 0;
+	wolf->pitch = 0;
 	wolf->map = 0;
 	wolf->size = 0;
 	wolf->line = 0;
 	wolf->posx = -1;
-	wolf->dste = 160 / tan(rad(FOV / 2));
+	wolf->dste = WINX / 2 / tan(rad(FOV / 2));
 	return (wolf);
 }
 
@@ -67,8 +68,7 @@ void			setup(int fd, t_wolf *wolf)
 		if (!(split = ft_strsplit(line, ' ')))
 			return ;
 		!wolf->line ? wolf->line = ft_tablen(split) : 0;
-		if (!ft_tablen(split) ||
-		(wolf->line && wolf->line != ft_tablen(split)))
+		if (!ft_tablen(split) || (wolf->line && wolf->line != ft_tablen(split)))
 			return ((void)ft_errret("wolf3d", "map invalid", 0));
 		if (!insert(wolf, split))
 			return ;
