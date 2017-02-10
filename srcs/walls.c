@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 22:27:56 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/08 14:14:04 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/10 17:22:49 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static void				draw_wall(int x, double dx, t_wolf *wolf)
 		SDL_SetRenderDrawColor(wolf->ren, ratio, ratio, ratio, 255);
 		SDL_RenderDrawRect(wolf->ren, &dst);
 	}
+	draw_floor(wolf, WINY / 2 + height / 2 + wolf->pitch, x);
 }
 
 void					walls(int x, t_wolf *wolf, double vx, double vy)

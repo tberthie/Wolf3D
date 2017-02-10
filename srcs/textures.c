@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 13:21:52 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/08 14:24:06 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/10 17:21:58 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ char			load_textures(t_wolf *wolf)
 	*wolf->txs = 0;
 	if (!add_texture(wolf, '0', "Textures/Black.bmp") ||
 	!add_texture(wolf, '1', "Textures/Black3.bmp") ||
-	!add_texture(wolf, '2', "Textures/Silver5.bmp"))
+	!add_texture(wolf, '2', "Textures/Wall1.bmp") ||
+	!add_texture(wolf, '3', "Textures/Wall2.bmp") ||
+	!add_texture(wolf, '4', "Textures/Outdoor1.bmp") ||
+	!add_texture(wolf, '5', "Textures/Outdoor2.bmp"))
 		return (0);
 	return (1);
 }

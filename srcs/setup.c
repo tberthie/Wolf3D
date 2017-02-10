@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 12:56:46 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/08 13:23:32 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/10 17:16:40 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void			setup(int fd, t_wolf *wolf)
 			return ;
 		free(line);
 	}
+	ft_putstr(wolf->map);
 	close(fd);
 	if (wolf->posx == -1 || !wolf->size || !wolf->line)
 		return ((void)ft_errret("wolf3d", "map invalid", 0));

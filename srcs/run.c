@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/08 14:13:32 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/10 17:17:43 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		move(int dir, t_wolf *wolf)
 		mx = cos(rad(wolf->angle + (dir == 1 ? 90 : -90))) / 20;
 		my = -sin(rad(wolf->angle + (dir == 1 ? 90 : -90))) / 20;
 	}
-	if (wolf->posx + mx > 0 && wolf->posx + mx < wolf->size / wolf->line &&
+	if (wolf->posx + mx > 0 && wolf->posx + mx < wolf->line &&
 	!is_wall(wolf->map[(int)(floor(wolf->posx + mx) + floor(wolf->posy)
 	* wolf->line)]))
 		wolf->posx += mx;
