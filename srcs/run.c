@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/10 17:17:43 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 16:55:02 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static void		move(int dir, t_wolf *wolf)
 		my = -sin(rad(wolf->angle + (dir == 1 ? 90 : -90))) / 20;
 	}
 	if (wolf->posx + mx > 0 && wolf->posx + mx < wolf->line &&
-	!is_wall(wolf->map[(int)(floor(wolf->posx + mx) + floor(wolf->posy)
-	* wolf->line)]))
+	wolf->map[(int)(floor(wolf->posx + mx) + floor(wolf->posy)
+	* wolf->line)] == FLOOR)
 		wolf->posx += mx;
 	if (wolf->posy + my > 0 && wolf->posy + my < wolf->size / wolf->line &&
-	!is_wall(wolf->map[(int)(floor(wolf->posx) + floor(wolf->posy + my)
-	* wolf->line)]))
+	wolf->map[(int)(floor(wolf->posx) + floor(wolf->posy + my)
+	* wolf->line)] == FLOOR)
 		wolf->posy += my;
 }
 
@@ -54,6 +54,9 @@ static void		event(SDL_Event event, t_wolf *wolf)
 		wolf->angle -= (double)(event.motion.xrel) / 15;
 		wolf->pitch -= (double)(event.motion.yrel);
 	}
+	else if (event.type == SDL_WINDOWEVENT && event.window.event ==
+	SDL_WINDOWEVENT_CLOSE)
+		wolf->status = 0;
 	wolf->pitch > WINX ? wolf->pitch = WINX : 0;
 	wolf->pitch < -WINX ? wolf->pitch = -WINX : 0;
 }
@@ -64,9 +67,9 @@ void			run(t_wolf *wolf)
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
 		write(2, "wolf3d: SDL failed to init\n", 27);
-	else if ((wolf->win = SDL_CreateWindow("Wolf3d", 0, 0, WINX, WINY,
-	SDL_WINDOW_SHOWN)) && (wolf->ren = SDL_CreateRenderer(wolf->win, -1,
-	SDL_RENDERER_ACCELERATED)))
+	else if ((wolf->win = SDL_CreateWindow("Wolf3d", SDL_WINDOWPOS_CENTERED,
+	SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN)) &&
+	(wolf->ren = SDL_CreateRenderer(wolf->win, -1, SDL_RENDERER_ACCELERATED)))
 	{
 		if (!load_textures(wolf))
 		{
@@ -76,7 +79,8 @@ void			run(t_wolf *wolf)
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 		while ((wolf->status))
 		{
-			SDL_PollEvent(&ev) ? event(ev, wolf) : 0;
+			while (SDL_PollEvent(&ev))
+				event(ev, wolf);
 			wolf->status == 1 ? render(wolf) : menu(wolf);
 		}
 		SDL_DestroyWindow(wolf->win);

@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 17:44:21 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/08 14:14:43 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 13:35:53 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,4 @@
 double			rad(double angle)
 {
 	return (angle * M_PI / 180);
-}
-
-char			is_wall(char c)
-{
-	return (c >= '0' && c <= '9' ? 1 : 0);
 }

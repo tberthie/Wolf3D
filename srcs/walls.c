@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 22:27:56 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/10 17:22:49 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 16:48:29 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static double			dist_hor(t_wolf *wolf, double vx, double vy)
 	x = wolf->posx + fabs(y - wolf->posy) * vx / fabs(vy);
 	if (x <= 0 || y <= 0 || x >= wolf->line || y >= wolf->size / wolf->line)
 		return (-1);
-	while (!is_wall(wolf->map[(pos = (int)(floor(x) + (y - (vy < 0))
-	* wolf->line))]))
+	while (wolf->map[(pos = (int)(floor(x) + (y - (vy < 0))
+	* wolf->line))] == FLOOR)
 	{
 		x += vx / fabs(vy);
 		y += (vy < 0 ? -1 : 1);
@@ -48,8 +48,8 @@ static double			dist_ver(t_wolf *wolf, double vx, double vy)
 	y = wolf->posy + fabs(x - wolf->posx) * vy / fabs(vx);
 	if (x <= 0 || y <= 0 || x >= wolf->line || y >= wolf->size / wolf->line)
 		return (-1);
-	while (!is_wall(wolf->map[(pos = (int)(x - (vx < 0) + floor(y)
-	* wolf->line))]))
+	while (wolf->map[(pos = (int)(x - (vx < 0) + floor(y)
+	* wolf->line))] == FLOOR)
 	{
 		x += (vx > 0 ? 1 : -1);
 		y += vy / fabs(vx);
@@ -88,16 +88,15 @@ static void				draw_wall(int x, double dx, t_wolf *wolf)
 		SDL_SetRenderDrawColor(wolf->ren, ratio, ratio, ratio, 255);
 		SDL_RenderDrawRect(wolf->ren, &dst);
 	}
-	draw_floor(wolf, WINY / 2 + height / 2 + wolf->pitch, x);
 }
 
-void					walls(int x, t_wolf *wolf, double vx, double vy)
+void					walls(int x, t_wolf *wolf)
 {
 	double	dx;
 	double	dy;
 
-	dx = dist_hor(wolf, vx, vy);
-	dy = dist_ver(wolf, vx, vy);
+	dx = dist_hor(wolf, wolf->vx, wolf->vy);
+	dy = dist_ver(wolf, wolf->vx, wolf->vy);
 	if (dx == -1 || (dy != -1 && dy < dx))
 	{
 		dx = dy;

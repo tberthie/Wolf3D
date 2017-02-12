@@ -1,4 +1,4 @@
-SRCS = main.c setup.c run.c render.c utl.c menu.c walls.c textures.c floor.c
+SRCS = $(addsuffix .c, main setup run render utl menu walls textures)
 
 OBJS = $(addprefix srcs/,$(SRCS:.c=.o))
 
