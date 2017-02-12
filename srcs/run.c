@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/12 19:27:57 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 20:45:24 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,16 @@ void			run(t_wolf *wolf)
 		error(0);
 	else if ((wolf->win = SDL_CreateWindow("Wolf3d", SDL_WINDOWPOS_CENTERED,
 	SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN)) &&
-	(wolf->ren = SDL_CreateRenderer(wolf->win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)))
+	(wolf->ren = SDL_CreateRenderer(wolf->win, -1, SDL_RENDERER_ACCELERATED |
+	SDL_RENDERER_PRESENTVSYNC)) && load_textures(wolf))
 	{
-		if (!load_textures(wolf))
-		{
-			SDL_Quit();
-			return ;
-		}
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 		while ((wolf->status))
 		{
 			update(wolf);
 			while (SDL_PollEvent(&ev))
 				event(ev, wolf);
-			wolf->status == 1 ? render(wolf) : menu(wolf);
+			render(wolf);
 		}
 		SDL_DestroyWindow(wolf->win);
 	}

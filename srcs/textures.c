@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 13:21:52 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/12 19:10:28 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 20:44:53 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char		add_texture(t_wolf *wolf, char id, char *path)
 	t_tx			*tx;
 
 	if (!(sf = SDL_LoadBMP(path)))
-		return (error(0));
+		return (0);
 	tx = ft_malloc(sizeof(t_tx));
 	tx->id = id;
 	tx->tx = SDL_CreateTextureFromSurface(wolf->ren, sf);
@@ -37,7 +37,7 @@ char			load_textures(t_wolf *wolf)
 	return (1);
 }
 
-char		find_texture(t_wolf *wolf)
+char			find_texture(t_wolf *wolf)
 {
 	char	id;
 	int		pos;

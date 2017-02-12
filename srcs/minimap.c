@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 19:28:51 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/12 20:12:44 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 20:22:03 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ void			render_minimap(t_wolf *wolf)
 		{
 			if (sqrt(pow(x - (MINI / 2), 2) + pow(y - (MINI / 2), 2))
 			< MINI / 2 && set_mapcolor(x, y, wolf))
-				SDL_RenderDrawPoint(wolf->ren, WINX / 2 - MINI / 2 + x,
-				y);
+				SDL_RenderDrawPoint(wolf->ren, x, y);
 			x++;
 		}
 		y++;
 	}
 	SDL_SetRenderDrawColor(wolf->ren, 0, 255, 255, 0);
-	SDL_RenderDrawPoint(wolf->ren, WINX / 2, MINI / 2);
+	SDL_RenderDrawPoint(wolf->ren, MINI / 2, MINI / 2);
 }
