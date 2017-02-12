@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/12 16:55:02 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 19:27:57 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <unistd.h>
 
-static void		move(int dir, t_wolf *wolf)
+static void		move(int dir, t_wolf *wolf, int shift)
 {
 	double	mx;
 	double	my;
@@ -29,6 +29,8 @@ static void		move(int dir, t_wolf *wolf)
 		mx = cos(rad(wolf->angle + (dir == 1 ? 90 : -90))) / 20;
 		my = -sin(rad(wolf->angle + (dir == 1 ? 90 : -90))) / 20;
 	}
+	mx *= shift ? SPRINT * SPEED : SPEED;
+	my *= shift ? SPRINT * SPEED : SPEED;
 	if (wolf->posx + mx > 0 && wolf->posx + mx < wolf->line &&
 	wolf->map[(int)(floor(wolf->posx + mx) + floor(wolf->posy)
 	* wolf->line)] == FLOOR)
@@ -41,15 +43,7 @@ static void		move(int dir, t_wolf *wolf)
 
 static void		event(SDL_Event event, t_wolf *wolf)
 {
-	if (event.type == SDL_KEYDOWN)
-	{
-		event.key.keysym.sym == SDLK_ESCAPE ? wolf->status = 0 : 0;
-		event.key.keysym.sym == SDLK_w ? move(0, wolf) : 0;
-		event.key.keysym.sym == SDLK_a ? move(1, wolf) : 0;
-		event.key.keysym.sym == SDLK_s ? move(2, wolf) : 0;
-		event.key.keysym.sym == SDLK_d ? move(3, wolf) : 0;
-	}
-	else if (event.type == SDL_MOUSEMOTION)
+	if (event.type == SDL_MOUSEMOTION)
 	{
 		wolf->angle -= (double)(event.motion.xrel) / 15;
 		wolf->pitch -= (double)(event.motion.yrel);
@@ -61,15 +55,27 @@ static void		event(SDL_Event event, t_wolf *wolf)
 	wolf->pitch < -WINX ? wolf->pitch = -WINX : 0;
 }
 
+static void		update(t_wolf *wolf)
+{
+	const Uint8		*status;
+
+	status = SDL_GetKeyboardState(NULL);
+	status[SDL_SCANCODE_ESCAPE] ? wolf->status = 0 : 0;
+	status[SDL_SCANCODE_W] ? move(0, wolf, status[SDL_SCANCODE_LSHIFT]) : 0;
+	status[SDL_SCANCODE_A] ? move(1, wolf, status[SDL_SCANCODE_LSHIFT]) : 0;
+	status[SDL_SCANCODE_S] ? move(2, wolf, status[SDL_SCANCODE_LSHIFT]) : 0;
+	status[SDL_SCANCODE_D] ? move(3, wolf, status[SDL_SCANCODE_LSHIFT]) : 0;
+}
+
 void			run(t_wolf *wolf)
 {
 	SDL_Event		ev;
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
-		write(2, "wolf3d: SDL failed to init\n", 27);
+		error(0);
 	else if ((wolf->win = SDL_CreateWindow("Wolf3d", SDL_WINDOWPOS_CENTERED,
 	SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN)) &&
-	(wolf->ren = SDL_CreateRenderer(wolf->win, -1, SDL_RENDERER_ACCELERATED)))
+	(wolf->ren = SDL_CreateRenderer(wolf->win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)))
 	{
 		if (!load_textures(wolf))
 		{
@@ -79,6 +85,7 @@ void			run(t_wolf *wolf)
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 		while ((wolf->status))
 		{
+			update(wolf);
 			while (SDL_PollEvent(&ev))
 				event(ev, wolf);
 			wolf->status == 1 ? render(wolf) : menu(wolf);
@@ -86,6 +93,6 @@ void			run(t_wolf *wolf)
 		SDL_DestroyWindow(wolf->win);
 	}
 	else
-		write(2, "wolf3d: SDL failed to create window\n", 36);
+		error(0);
 	SDL_Quit();
 }

@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 12:51:48 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/12 17:15:26 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 19:47:44 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,9 @@ static void			render_floor(t_wolf *wolf)
 	}
 }
 
-static void			render_sky(t_wolf *wolf)
+/*static void			render_sky(t_wolf *wolf)
 {
-	int		y;
-	double	ratio;
-
-	y = 0;
-	while (y > -wolf->pitch)
-	{
-		ratio = 1 - y / (WINY / 2);
-		ratio = ratio > 1 ? 1 : ratio;
-		SDL_SetRenderDrawColor(wolf->ren, 0, 0, 125 * ratio, 255);
-		SDL_RenderDrawLine(wolf->ren, 0, y + wolf->pitch, WINX,
-		y + wolf->pitch);
-		y++;
-	}
-}
+}*/
 
 void				render(t_wolf *wolf)
 {
@@ -56,7 +43,7 @@ void				render(t_wolf *wolf)
 
 	SDL_SetRenderDrawColor(wolf->ren, 0, 0, 0, 0);
 	SDL_RenderClear(wolf->ren);
-	render_sky(wolf);
+//	render_sky(wolf);
 	render_floor(wolf);
 	x = 0;
 	while (x < WINX)
@@ -67,5 +54,6 @@ void				render(t_wolf *wolf)
 		walls(x, wolf);
 		x++;
 	}
+	render_minimap(wolf);
 	SDL_RenderPresent(wolf->ren);
 }

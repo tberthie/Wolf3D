@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:06:02 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/12 17:10:12 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/12 20:09:37 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@
 # define WINY	(double)1000
 # define FOV	(double)60
 
+# define SPEED	1
+# define SPRINT	2
+
 # define FLOOR	'.'
 # define PLAYER	'x'
-# define BMP	64
+# define BMP	512
 
-# define FR		100
-# define FG		100
-# define FB		100
+# define MINI	200
+
+# define FR		150
+# define FG		150
+# define FB		150
 
 # include <SDL.h>
 
@@ -66,7 +71,8 @@ void			menu(t_wolf *wolf);
 void			walls(int x, t_wolf *wolf);
 char			load_textures(t_wolf *wolf);
 char			find_texture(t_wolf *wolf);
-
+void			render_minimap(t_wolf *wolf);
 double			rad(double angle);
+int				error(int ret);
 
 #endif
