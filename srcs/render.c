@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 12:51:48 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/12 20:43:55 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/14 20:45:36 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,28 @@ static void			render_floor(t_wolf *wolf)
 	{
 		ratio = y / (WINY / 2);
 		ratio = ratio > 1 ? 1 : ratio;
-		SDL_SetRenderDrawColor(wolf->ren, FR * ratio, FG * ratio,
-		FB * ratio, 255);
+		SDL_SetRenderDrawColor(wolf->ren, 150 * ratio, 150 * ratio,
+		150 * ratio, 255);
 		SDL_RenderDrawLine(wolf->ren, 0, y + WINY / 2 + wolf->pitch, WINX, y
 		+ WINY / 2 + wolf->pitch);
 		y++;
+	}
+}
+
+static void			render_sky(t_wolf *wolf)
+{
+	int		y;
+	double	ratio;
+
+	y = WINY / 2;
+	while (y > -wolf->pitch)
+	{
+		ratio = 1 - y / (WINY / 2);
+		ratio = ratio > 1 ? 1 : ratio;
+		SDL_SetRenderDrawColor(wolf->ren, 0, 0, 75 * ratio, 255);
+		SDL_RenderDrawLine(wolf->ren, 0, y + wolf->pitch, WINX,
+		y + wolf->pitch);
+		y--;
 	}
 }
 
@@ -49,6 +66,7 @@ void				render(t_wolf *wolf)
 	SDL_SetRenderDrawColor(wolf->ren, 0, 0, 0, 0);
 	SDL_RenderClear(wolf->ren);
 	render_floor(wolf);
+	render_sky(wolf);
 	x = 0;
 	while (x < WINX)
 	{
