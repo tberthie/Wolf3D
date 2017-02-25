@@ -1,4 +1,4 @@
-SRCS = $(addsuffix .c, main setup run render utl walls textures minimap)
+SRCS = $(addsuffix .c, main setup run render utl walls textures minimap draw)
 
 OBJS = $(addprefix objs/,$(SRCS:.c=.o))
 

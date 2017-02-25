@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:06:02 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/14 20:45:12 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/25 17:54:58 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,17 @@
 typedef struct	s_tx
 {
 	char			id;
-	SDL_Texture		*tx;
+	SDL_Surface		*tx;
 }				t_tx;
 
 typedef struct	s_wolf
 {
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
+
+	SDL_Surface		*img;
+	unsigned int	color;
+
 	char			status;
 
 	double			angle;
@@ -55,7 +59,7 @@ typedef struct	s_wolf
 	int				pos[2];
 	double			ratio[2];
 
-	SDL_Texture		*tx;
+	SDL_Surface		*tx;
 	t_tx			**txs;
 }				t_wolf;
 
@@ -69,5 +73,8 @@ char			find_texture(t_wolf *wolf);
 void			render_minimap(t_wolf *wolf);
 double			rad(double angle);
 int				error(int ret);
+void			set_pixel(t_wolf *wolf, int x, int y);
+void			draw_line(t_wolf *wolf, int x, int y, int off);
+void			set_color(t_wolf *wolf, int r, int g, int b);
 
 #endif

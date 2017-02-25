@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 13:21:52 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/14 20:33:00 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/25 17:52:14 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static char		add_texture(t_wolf *wolf, char id, char *path)
 		return (0);
 	tx = ft_malloc(sizeof(t_tx));
 	tx->id = id;
-	tx->tx = SDL_CreateTextureFromSurface(wolf->ren, sf);
-	SDL_FreeSurface(sf);
+	tx->tx = sf;
 	ft_parrpush((void***)&wolf->txs, tx);
 	return (1);
 }
