@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 22:27:56 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/25 18:25:12 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/27 15:27:40 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,37 @@ static double			dist_ver(t_wolf *wolf, double vx, double vy)
 	return (sqrt(pow(wolf->posx - x, 2) + pow(wolf->posy - y, 2)));
 }
 
-static void				draw_wall(int x, double dx, t_wolf *wolf)
+static void				draw_wall(int x, double ratio, int height, t_wolf *wolf)
 {
 	unsigned int	color;
-	double			ratio;
-	int				height;
+	int				correction;
+	int				y;
 	int				i;
 
-	i = 0;
-	ratio = dx > 4 ? 255 * (4 / dx) : 255;
-	height = wolf->dste / (dx * cos(rad(-FOV / 2 + FOV * x / WINX)));
+	y = WINY / 2 - height / 2 + wolf->pitch;
+	correction = y < 0 ? -y : 0;
 	if (!find_texture(wolf))
 	{
-		set_color(wolf, (int)ratio, (int)ratio, (int)ratio);
-		draw_line(wolf, x, WINY / 2 - height / 2 + wolf->pitch, -height);
+		if (y + height > WINY)
+			height -= y + height - WINY;
+		set_color(wolf, ratio, ratio, ratio);
+		draw_line(wolf, x, y + correction, -(height - correction));
 	}
 	else
-		while (i < height)
+	{
+		i = correction;
+		while (i < height && y + i < WINY)
 		{
-			color = ((unsigned int*)wolf->tx->pixels)[
-			(int)(i / height * BMP * wolf->tx->pitch) +
-			(int)(*wolf->ratio * wolf->tx->pitch)];
+			int off = floor(*wolf->ratio * wolf->tx->pitch) +
+			i * wolf->tx->pitch;
 
-			set_color(wolf, color >> 24, color >> 16, color >> 8);
-			set_pixel(wolf, x, WINY / 2 - height / 2 + wolf->pitch + i++);
+			color = *(unsigned int*)(wolf->tx->pixels + off);
+			set_color(wolf, (unsigned char)(color >> 16),
+			(unsigned char)(color >> 8), (unsigned char)color);
+			set_pixel(wolf, x, y + i);
+			i++;
 		}
+	}
 }
 
 void					walls(int x, t_wolf *wolf)
@@ -102,5 +108,6 @@ void					walls(int x, t_wolf *wolf)
 		wolf->ratio[0] = wolf->ratio[1];
 	}
 	if (dx > 0)
-		draw_wall(x, dx, wolf);
+		draw_wall(x, dx > 4 ? 255 * 4 / dx : 255, wolf->dste / (dx *
+		cos(rad(-FOV / 2 + FOV * x / WINX))), wolf);
 }

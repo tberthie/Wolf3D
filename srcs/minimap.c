@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 19:28:51 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/12 20:22:03 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/26 00:17:22 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char		set_mapcolor(int x, int y, t_wolf *wolf)
 	py = wolf->posy + ((double)y - MINI / 2) / 10;
 	if (px > 0 && py > 0 && px < wolf->line && py < wolf->size / wolf->line &&
 	wolf->map[(int)(floor(px) + floor(py) * wolf->line)] != FLOOR)
-		SDL_SetRenderDrawColor(wolf->ren, 255, 255, 255, 255);
+		set_color(wolf, 255, 255, 255);
 	else
 		return (0);
 	return (1);
@@ -42,11 +42,11 @@ void			render_minimap(t_wolf *wolf)
 		{
 			if (sqrt(pow(x - (MINI / 2), 2) + pow(y - (MINI / 2), 2))
 			< MINI / 2 && set_mapcolor(x, y, wolf))
-				SDL_RenderDrawPoint(wolf->ren, x, y);
+				set_pixel(wolf, x, y);
 			x++;
 		}
 		y++;
 	}
-	SDL_SetRenderDrawColor(wolf->ren, 0, 255, 255, 0);
-	SDL_RenderDrawPoint(wolf->ren, MINI / 2, MINI / 2);
+	set_color(wolf, 0, 255, 255);
+	set_pixel(wolf, MINI / 2, MINI / 2);
 }

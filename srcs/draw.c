@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 14:19:19 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/25 18:27:13 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/27 15:22:38 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		set_pixel(t_wolf *wolf, int x, int y)
 {
 	unsigned int	*target;
 
-	if (x < 0 || x > WINX || y < 0 || y > WINY)
+	if (x < 0 || x >= WINX || y < 0 || y >= WINY)
 		return ;
 	target = wolf->img->pixels + (y * wolf->img->pitch + x * 4);
 	*target = wolf->color;

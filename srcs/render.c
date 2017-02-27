@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 12:51:48 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/25 18:26:57 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/27 15:25:49 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ static void		render_floor(t_wolf *wolf)
 	y = 0;
 	while (y < WINY / 2 - wolf->pitch)
 	{
-		ratio = y / (WINY / 2);
-		ratio = ratio > 1 ? 1 : ratio;
-		set_color(wolf, (int)(150 * ratio), (int)(150 * ratio),
-		(int)(150 * ratio));
+		ratio = 150 * (2 * y / WINY);
+		ratio = ratio > 150 ? 150 : ratio;
+		set_color(wolf, (int)ratio, (int)ratio, (int)ratio);
 		draw_line(wolf, 0, y + WINY / 2 + wolf->pitch, WINX);
 		y++;
 	}
@@ -47,7 +46,7 @@ static void		render_sky(t_wolf *wolf)
 	}
 }
 
-static void			render_crosshair(t_wolf *wolf)
+static void		render_crosshair(t_wolf *wolf)
 {
 	set_color(wolf, 0, 255, 0);
 	draw_line(wolf, WINX / 2 - 5, WINY / 2, 10);
@@ -73,7 +72,7 @@ void			render(t_wolf *wolf)
 		walls(x, wolf);
 		x++;
 	}
-//	render_minimap(wolf);
+	render_minimap(wolf);
 	render_crosshair(wolf);
 	txt = SDL_CreateTextureFromSurface(wolf->ren, wolf->img);
 	SDL_RenderCopy(wolf->ren, txt, 0, 0);

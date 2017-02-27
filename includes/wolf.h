@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:06:02 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/25 17:54:58 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/26 16:24:41 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define FLOOR	'.'
 # define PLAYER	'x'
-# define BMP	512
+# define BMP	(double)512
 # define MINI	200
 
 # include <SDL.h>
