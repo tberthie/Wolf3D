@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 12:51:48 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/27 15:25:49 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/27 16:30:35 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void		render_sky(t_wolf *wolf)
 	{
 		ratio = 1 - y / (WINY / 2);
 		ratio = ratio > 1 ? 1 : ratio;
-		set_color(wolf, 0, 0, (int)(75 * ratio));
+		set_color(wolf, 0, 0, (int)(ratio * 75));
 		draw_line(wolf, 0, y + wolf->pitch, WINX);
 		y--;
 	}

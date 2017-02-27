@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 22:27:56 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/27 15:27:40 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/27 16:55:40 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <math.h>
 
-static double			dist_hor(t_wolf *wolf, double vx, double vy)
+static double	dist_hor(t_wolf *wolf, double vx, double vy)
 {
 	double	x;
 	double	y;
@@ -38,7 +38,7 @@ static double			dist_hor(t_wolf *wolf, double vx, double vy)
 	return (sqrt(pow(wolf->posx - x, 2) + pow(wolf->posy - y, 2)));
 }
 
-static double			dist_ver(t_wolf *wolf, double vx, double vy)
+static double	dist_ver(t_wolf *wolf, double vx, double vy)
 {
 	double	x;
 	double	y;
@@ -61,40 +61,41 @@ static double			dist_ver(t_wolf *wolf, double vx, double vy)
 	return (sqrt(pow(wolf->posx - x, 2) + pow(wolf->posy - y, 2)));
 }
 
-static void				draw_wall(int x, double ratio, int height, t_wolf *wolf)
+static void		textured_wall(int x, double ratio, int height, t_wolf *wolf)
 {
 	unsigned int	color;
-	int				correction;
+	int				offset;
 	int				y;
 	int				i;
 
 	y = WINY / 2 - height / 2 + wolf->pitch;
-	correction = y < 0 ? -y : 0;
-	if (!find_texture(wolf))
+	i = y < 0 ? -y : 0;
+	while (i < height && y + i < WINY)
 	{
-		if (y + height > WINY)
-			height -= y + height - WINY;
-		set_color(wolf, ratio, ratio, ratio);
-		draw_line(wolf, x, y + correction, -(height - correction));
-	}
-	else
-	{
-		i = correction;
-		while (i < height && y + i < WINY)
-		{
-			int off = floor(*wolf->ratio * wolf->tx->pitch) +
-			i * wolf->tx->pitch;
-
-			color = *(unsigned int*)(wolf->tx->pixels + off);
-			set_color(wolf, (unsigned char)(color >> 16),
-			(unsigned char)(color >> 8), (unsigned char)color);
-			set_pixel(wolf, x, y + i);
-			i++;
-		}
+		offset = floor(*wolf->ratio * wolf->tx->pitch) +
+		floor((double)i / (double)height * BMP) * wolf->tx->pitch;
+		offset -= offset % wolf->tx->format->BytesPerPixel;
+		color = *(unsigned int*)(wolf->tx->pixels + offset);
+		set_color(wolf, (unsigned char)(color >> 16) * ratio,
+		(unsigned char)(color >> 8) * ratio, (unsigned char)color * ratio);
+		set_pixel(wolf, x, y + i++);
 	}
 }
 
-void					walls(int x, t_wolf *wolf)
+static void		untextured_wall(int x, double ratio, int height, t_wolf *wolf)
+{
+	int		correction;
+	int		y;
+
+	y = WINY / 2 - height / 2 + wolf->pitch;
+	correction = y < 0 ? -y : 0;
+	if (y + height > WINY)
+		height -= y + height - WINY;
+	set_color(wolf, ratio * 255, ratio * 255, ratio * 255);
+	draw_line(wolf, x, y + correction, -(height - correction));
+}
+
+void			walls(int x, t_wolf *wolf)
 {
 	double	dx;
 	double	dy;
@@ -108,6 +109,12 @@ void					walls(int x, t_wolf *wolf)
 		wolf->ratio[0] = wolf->ratio[1];
 	}
 	if (dx > 0)
-		draw_wall(x, dx > 4 ? 255 * 4 / dx : 255, wolf->dste / (dx *
-		cos(rad(-FOV / 2 + FOV * x / WINX))), wolf);
+	{
+		if (find_texture(wolf))
+			textured_wall(x, dx > 4 ? 4 / dx : 1, wolf->dste / (dx *
+			cos(rad(-FOV / 2 + FOV * x / WINX))), wolf);
+		else
+			untextured_wall(x, dx > 4 ? 4 / dx : 1, wolf->dste / (dx *
+			cos(rad(-FOV / 2 + FOV * x / WINX))), wolf);
+	}
 }

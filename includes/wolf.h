@@ -6,7 +6,7 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:06:02 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/26 16:24:41 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/27 16:56:22 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@
 # define WINY	(double)1000
 # define FOV	(double)60
 
-# define SPEED	1
+# define FPS	(double)120
+
+# define SPEED	1.5
 # define SPRINT	2
 
 # define FLOOR	'.'
 # define PLAYER	'x'
+
 # define BMP	(double)512
+
 # define MINI	200
 
 # include <SDL.h>
@@ -51,6 +55,7 @@ typedef struct	s_wolf
 	double			posx;
 	double			posy;
 	double			dste;
+	double			fog;
 
 	char			*map;
 	int				line;

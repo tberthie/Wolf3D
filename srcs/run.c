@@ -6,13 +6,14 @@
 /*   By: tberthie <tberthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:09:57 by tberthie          #+#    #+#             */
-/*   Updated: 2017/02/26 00:32:18 by tberthie         ###   ########.fr       */
+/*   Updated: 2017/02/27 16:10:48 by tberthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
 #include <unistd.h>
+#include <time.h>
 
 static void		move(int dir, t_wolf *wolf, int shift)
 {
@@ -69,7 +70,7 @@ static void		update(t_wolf *wolf)
 
 void			run(t_wolf *wolf)
 {
-	SDL_Event		ev;
+	SDL_Event	ev;
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
 		error(0);
